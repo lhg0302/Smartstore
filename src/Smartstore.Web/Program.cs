@@ -5,7 +5,6 @@ global using System.Linq;
 global using System.Threading;
 global using System.Threading.Tasks;
 global using Microsoft.AspNetCore.Mvc;
-global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using Smartstore.Core;
@@ -36,9 +35,9 @@ using Serilog.Events;
 using Serilog.Extensions.Logging;
 using Serilog.Filters;
 using Smartstore;
-using Smartstore.Core.Data.Migrations;
 using Smartstore.Core.Logging.Serilog;
 using Smartstore.Utilities;
+using SqlSugar;
 
 var rgSystemSource = new Regex("^File|^System|^Microsoft|^Serilog|^Autofac|^Castle|^MiniProfiler|^Newtonsoft|^Pipelines|^Azure|^StackExchange|^Superpower|^Dasync", RegexOptions.Compiled);
 var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? Environments.Production;
@@ -91,6 +90,19 @@ if (appContext.AppConfiguration.MaxRequestBodySize != null)
 // Add NativeLibraryDirectory to PATH environment variable
 AddPathToEnv(appContext.RuntimeInfo.NativeLibraryDirectory);
 
+// Register SqlSugar.
+builder.Services.AddSingleton<ISqlSugarClient>(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var connStr = config.GetConnectionString("DefaultConnection");
+    return new SqlSugarClient(new ConnectionConfig
+    {
+        ConnectionString = connStr,
+        DbType = DbType.SqlServer,
+        IsAutoCloseConnection = true
+    });
+});
+
 // Add services to the container.
 engineStarter.ConfigureServices(builder.Services);
 
@@ -138,11 +150,10 @@ async Task InitializeDatabases()
         var scopeAccessor = appContext.Services.Resolve<ILifetimeScopeAccessor>();
         using (scopeAccessor.BeginContextAwareScope(out var scope))
         {
-            var initializer = scope.ResolveOptional<IDatabaseInitializer>();
-            if (initializer != null)
+            var db = scope.ResolveOptional<ISqlSugarClient>();
+            if (db != null)
             {
-                var appLifetime = scope.ResolveOptional<IHostApplicationLifetime>();
-                await initializer.InitializeDatabasesAsync(appLifetime?.ApplicationStopping ?? CancellationToken.None);
+                await db.Ado.CheckConnectionAsync();
             }
         }
     }
