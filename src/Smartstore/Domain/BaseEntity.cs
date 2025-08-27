@@ -26,7 +26,7 @@ namespace Smartstore.Domain
         /// Gets or sets the entity identifier
         /// </summary>
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual string GetEntityName()
@@ -40,7 +40,7 @@ namespace Smartstore.Domain
         /// </summary>
         public virtual bool IsTransientRecord()
         {
-            return Id == 0;
+            return Id == 0L;
         }
 
         /// <summary>
