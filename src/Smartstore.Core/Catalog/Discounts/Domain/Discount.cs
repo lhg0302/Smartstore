@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Runtime.Serialization;
@@ -134,7 +135,7 @@ namespace Smartstore.Core.Catalog.Discounts
         /// <summary>
         /// Gets or sets the discount type.
         /// </summary>
-		[NotMapped]
+		[SugarColumn(IsIgnore = true)]
         public DiscountType DiscountType
         {
             get => (DiscountType)DiscountTypeId;
@@ -185,7 +186,7 @@ namespace Smartstore.Core.Catalog.Discounts
         /// <summary>
         /// Gets or sets the discount limitation.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public DiscountLimitationType DiscountLimitation
         {
             get => (DiscountLimitationType)DiscountLimitationId;

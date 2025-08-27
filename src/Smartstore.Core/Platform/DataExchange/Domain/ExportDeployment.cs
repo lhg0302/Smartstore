@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -61,7 +62,7 @@ namespace Smartstore.Core.DataExchange
         /// <summary>
         /// The deployment type.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public ExportDeploymentType DeploymentType
         {
             get => (ExportDeploymentType)DeploymentTypeId;

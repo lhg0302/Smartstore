@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -43,7 +44,7 @@ namespace Smartstore.Core.DataExchange
         /// <summary>
         /// The file type.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public ImportFileType FileType
         {
             get => (ImportFileType)FileTypeId;
@@ -58,7 +59,7 @@ namespace Smartstore.Core.DataExchange
         /// <summary>
         /// The entity type.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public ImportEntityType EntityType
         {
             get => (ImportEntityType)EntityTypeId;

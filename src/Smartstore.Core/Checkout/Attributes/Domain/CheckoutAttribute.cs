@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Smartstore.Core.Catalog.Attributes;
@@ -71,7 +72,7 @@ namespace Smartstore.Core.Checkout.Attributes
         /// <summary>
         /// Gets the attribute control type
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public AttributeControlType AttributeControlType
         {
             get => (AttributeControlType)AttributeControlTypeId;

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Smartstore.Core.Rules
 {
@@ -14,11 +14,11 @@ namespace Smartstore.Core.Rules
         public int RuleSetId { get; set; }
 
         private RuleSetEntity _ruleSet;
-        [ForeignKey("RuleSetId")]
+        [Navigate(NavigateType.ManyToOne, nameof(RuleSetId))]
         [IgnoreDataMember]
         public RuleSetEntity RuleSet
         {
-            get => _ruleSet = LazyLoader.Load(this, ref _ruleSet);
+            get => _ruleSet;
             set => _ruleSet = value;
         }
 
@@ -33,7 +33,7 @@ namespace Smartstore.Core.Rules
 
         public int DisplayOrder { get; set; }
 
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public bool IsGroup => RuleType.EqualsNoCase("Group");
 
         public RuleEntity Clone()

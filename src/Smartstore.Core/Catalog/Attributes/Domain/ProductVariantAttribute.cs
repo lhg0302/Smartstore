@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -90,7 +91,7 @@ namespace Smartstore.Core.Catalog.Attributes
         /// <summary>
         /// Gets or sets the attribute control type.
         /// </summary>
-		[NotMapped]
+		[SugarColumn(IsIgnore = true)]
         public AttributeControlType AttributeControlType
         {
             get => (AttributeControlType)AttributeControlTypeId;
@@ -105,7 +106,7 @@ namespace Smartstore.Core.Catalog.Attributes
         /// <summary>
         /// Gets or sets a value indicating whether the selection of multiple values is supported.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public bool IsMultipleChoice => AttributeControlType == AttributeControlType.Checkboxes;
 
         /// <summary>

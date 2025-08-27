@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Smartstore.Core.Identity;
+﻿using Smartstore.Core.Identity;
+using SqlSugar;
 
 namespace Smartstore.Core.Security
 {
@@ -23,10 +22,10 @@ namespace Smartstore.Core.Security
         /// <summary>
         /// Gets or sets the permission record.
         /// </summary>
-        [ForeignKey("PermissionRecordId")]
+        [Navigate(NavigateType.ManyToOne, nameof(PermissionRecordId))]
         public PermissionRecord PermissionRecord
         {
-            get => _permissionRecord ?? LazyLoader.Load(this, ref _permissionRecord);
+            get => _permissionRecord;
             set => _permissionRecord = value;
         }
 
@@ -39,10 +38,10 @@ namespace Smartstore.Core.Security
         /// <summary>
         /// Gets or sets the customer role.
         /// </summary>
-        [ForeignKey("CustomerRoleId")]
+        [Navigate(NavigateType.ManyToOne, nameof(CustomerRoleId))]
         public CustomerRole CustomerRole
         {
-            get => _customerRole ?? LazyLoader.Load(this, ref _customerRole);
+            get => _customerRole;
             set => _customerRole = value;
         }
     }

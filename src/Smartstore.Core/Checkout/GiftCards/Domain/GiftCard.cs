@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -30,7 +31,7 @@ namespace Smartstore.Core.Checkout.GiftCards
         /// <summary>
         /// Gets or sets the gift card type
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public GiftCardType GiftCardType
         {
             get => (GiftCardType)GiftCardTypeId;

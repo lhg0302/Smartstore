@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -87,7 +88,7 @@ namespace Smartstore.Core.Checkout.Cart
         /// <summary>
         /// Gets or sets the shopping cart type
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public ShoppingCartType ShoppingCartType
         {
             get => (ShoppingCartType)ShoppingCartTypeId;
@@ -137,21 +138,21 @@ namespace Smartstore.Core.Checkout.Cart
         /// <summary>
         /// Gets a value indicating whether the shopping cart item is free shipping
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public bool IsFreeShipping
             => Product?.IsFreeShipping == true;
 
         /// <summary>
         /// Gets a value indicating whether the shopping cart item is ship enabled
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public bool IsShippingEnabled
             => Product?.IsShippingEnabled ?? true;
 
         /// <summary>
         /// Gets a value indicating whether the shopping cart item is tax exempt
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public bool IsTaxExempt
             => Product?.IsTaxExempt == true;
 
