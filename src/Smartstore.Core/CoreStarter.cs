@@ -24,11 +24,8 @@ using Smartstore.Core.Catalog.Products;
 using Smartstore.Core.Checkout.GiftCards;
 using Smartstore.Core.Checkout.Shipping;
 using Smartstore.Core.Common.JsonConverters;
-using Smartstore.Core.Data;
-using Smartstore.Core.Data.Migrations;
-using Smartstore.Data;
-using Smartstore.Data.Caching;
-using Smartstore.Data.Providers;
+using Microsoft.Extensions.Configuration;
+using SqlSugar;
 using Smartstore.Engine.Builders;
 using Smartstore.Templating;
 using Smartstore.Templating.Liquid;
@@ -68,65 +65,20 @@ namespace Smartstore.Core.Bootstrapping
             // CodePages dependency required by ExcelDataReader to avoid NotSupportedException "No data is available for encoding 1252."
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            services.AddDbMigrator(appContext);
             services.AddDisplayControl();
             services.AddWkHtmlToPdf();
 
-            if (appContext.IsInstalled && config.UsePooledDbContextFactory)
+            services.AddSingleton<ISqlSugarClient>(sp =>
             {
-                // Application DbContext as pooled factory
-                services.AddPooledDbContextFactory<SmartDbContext>(DbContextAction, config.DbContextPoolSize);
-            }
-            else
-            {
-                // No pooling allowed or desired.
-                services.AddDbContextFactory<SmartDbContext>(DbContextAction);
-            }
-
-            services.AddScoped(sp => sp.GetRequiredService<IDbContextFactory<SmartDbContext>>().CreateDbContext());
-
-            void DbContextAction(IServiceProvider c, DbContextOptionsBuilder builder)
-            {
-                if (appContext.IsInstalled)
+                var configuration = sp.GetRequiredService<IConfiguration>();
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                return new SqlSugarClient(new ConnectionConfig
                 {
-                    if (config.UseDbCache)
-                    {
-                        builder.UseSecondLevelCache();
-                    }
-
-                    if (config.UseSequentialDbDataReader && DataSettings.Instance.DbFactory.DbSystem == DbSystemType.SqlServer)
-                    {
-                        // Fixes large binary or text async read performance issue.
-                        // See: https://github.com/dotnet/SqlClient/issues/593
-                        builder.AddInterceptors(new SequentialDbCommandInterceptor());
-                    }
-                }
-
-                builder
-                    .UseDbFactory(factoryBuilder =>
-                    {
-                        factoryBuilder
-                            //.QuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
-                            .AddModelAssemblies(new[]
-                            { 
-                                // Add all core models from Smartstore.Core assembly
-                                typeof(SmartDbContext).Assembly,
-                                // Add provider specific entity configurations
-                                DataSettings.Instance.DbFactory.GetType().Assembly
-                            });
-
-                        if (appContext.IsInstalled)
-                        {
-                            factoryBuilder.AddDataSeeder<SmartDbContext, SmartDbContextDataSeeder>();
-                        }
-                    });
-
-                var configurers = c.GetServices<IDbContextConfigurationSource<SmartDbContext>>();
-                foreach (var configurer in configurers)
-                {
-                    configurer.Configure(c, builder);
-                }
-            }
+                    ConnectionString = connectionString,
+                    DbType = DbType.SqlServer,
+                    IsAutoCloseConnection = true
+                });
+            });
         }
 
         internal static void RegisterTypeConverters()
