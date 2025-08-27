@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using SqlSugar;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Smartstore.Core.Catalog.Products;
@@ -38,7 +39,7 @@ namespace Smartstore.Core.Checkout.Payment
         /// <summary>
         /// Gets or sets the payment status.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public RecurringProductCyclePeriod CyclePeriod
         {
             get => (RecurringProductCyclePeriod)CyclePeriodId;

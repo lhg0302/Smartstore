@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -95,7 +96,7 @@ namespace Smartstore.Core.Content.Media
         /// <summary>
         /// Gets or sets the media track operation.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public MediaTrackOperation Operation { get; set; }
 
         protected override bool Equals(BaseEntity other)

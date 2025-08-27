@@ -7,6 +7,7 @@ using Smartstore.Core.Checkout.Cart;
 using Smartstore.Core.Checkout.Orders;
 using Smartstore.Core.Common;
 using Smartstore.Core.Stores;
+using SqlSugar;
 
 namespace Smartstore.Core.Identity
 {
@@ -107,7 +108,7 @@ namespace Smartstore.Core.Identity
         /// <summary>
         /// Gets or sets the password format
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         [IgnoreDataMember]
         public PasswordFormat PasswordFormat
         {
@@ -125,7 +126,7 @@ namespace Smartstore.Core.Identity
         /// Gets or sets a value indicating whether the customer was detected
         /// cookie-less by evaluating the ClientIdent (IP+UserAgent).
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         [IgnoreDataMember]
         public bool DetectedByClientIdent { get; set; }
 

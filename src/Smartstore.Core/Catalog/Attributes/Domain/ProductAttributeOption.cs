@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -90,7 +91,7 @@ namespace Smartstore.Core.Catalog.Attributes
         /// <summary>
         /// Gets or sets the product attribute value type.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public ProductVariantAttributeValueType ValueType
         {
             get => (ProductVariantAttributeValueType)ValueTypeId;

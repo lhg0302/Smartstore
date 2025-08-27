@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -114,7 +115,7 @@ namespace Smartstore.Core.Logging
         /// <summary>
         /// Gets or sets the log level
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public LogLevel LogLevel
         {
             get => (LogLevel)LogLevelId;

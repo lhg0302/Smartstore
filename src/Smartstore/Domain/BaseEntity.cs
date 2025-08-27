@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Smartstore.Data;
+using SqlSugar;
 
 namespace Smartstore.Domain
 {
@@ -15,7 +14,7 @@ namespace Smartstore.Domain
         private ILazyLoader _lazyLoader;
         private Dictionary<string, object> _hookState;
 
-        [IgnoreDataMember, NotMapped]
+        [IgnoreDataMember, SugarColumn(IsIgnore = true)]
         protected internal virtual ILazyLoader LazyLoader
         {
             get => _lazyLoader ?? NullLazyLoader.Instance;
@@ -25,7 +24,7 @@ namespace Smartstore.Domain
         /// <summary>
         /// Gets or sets the entity identifier
         /// </summary>
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public long Id { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

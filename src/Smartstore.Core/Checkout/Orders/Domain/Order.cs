@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Globalization;
@@ -426,7 +427,7 @@ namespace Smartstore.Core.Checkout.Orders
         /// <summary>
         /// Gets or sets the order status
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public OrderStatus OrderStatus
         {
             get => (OrderStatus)OrderStatusId;
@@ -441,7 +442,7 @@ namespace Smartstore.Core.Checkout.Orders
         /// <summary>
         /// Gets or sets the payment status
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public PaymentStatus PaymentStatus
         {
             get => (PaymentStatus)PaymentStatusId;
@@ -456,7 +457,7 @@ namespace Smartstore.Core.Checkout.Orders
         /// <summary>
         /// Gets or sets the shipping status
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public ShippingStatus ShippingStatus
         {
             get => (ShippingStatus)ShippingStatusId;
@@ -471,7 +472,7 @@ namespace Smartstore.Core.Checkout.Orders
         /// <summary>
         /// Gets or sets the customer tax display type
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public TaxDisplayType CustomerTaxDisplayType
         {
             get => (TaxDisplayType)CustomerTaxDisplayTypeId;
@@ -582,7 +583,7 @@ namespace Smartstore.Core.Checkout.Orders
         /// <summary>
         /// Gets the applied tax rates
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public SortedDictionary<decimal, decimal> TaxRatesDictionary => ParseTaxRates(TaxRates);
 
         protected static SortedDictionary<decimal, decimal> ParseTaxRates(string taxRatesStr)

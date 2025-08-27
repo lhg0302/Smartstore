@@ -1,4 +1,5 @@
 ﻿using System.Collections.Frozen;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
@@ -143,7 +144,7 @@ namespace Smartstore.Core.Catalog.Products
         /// <summary>
         /// Gets or sets the product type.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public ProductType ProductType
         {
             get => (ProductType)ProductTypeId;
@@ -153,7 +154,7 @@ namespace Smartstore.Core.Catalog.Products
         /// <summary>
         /// Gets the label hint for the product type.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public string ProductTypeLabelHint
         {
             get
@@ -337,7 +338,7 @@ namespace Smartstore.Core.Catalog.Products
         /// <summary>
         /// Gets or sets the gift card type.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public GiftCardType GiftCardType
         {
             get => (GiftCardType)GiftCardTypeId;
@@ -394,7 +395,7 @@ namespace Smartstore.Core.Catalog.Products
         /// <summary>
         /// Gets or sets the download activation type.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public DownloadActivationType DownloadActivationType
         {
             get => (DownloadActivationType)DownloadActivationTypeId;
@@ -450,7 +451,7 @@ namespace Smartstore.Core.Catalog.Products
         /// <summary>
         /// Gets or sets the cycle period for recurring products.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public RecurringProductCyclePeriod RecurringCyclePeriod
         {
             get => (RecurringProductCyclePeriod)RecurringCyclePeriodId;
@@ -502,7 +503,7 @@ namespace Smartstore.Core.Catalog.Products
         /// <summary>
         /// Gets or sets a value indicating how to manage the inventory.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public ManageInventoryMethod ManageInventoryMethod
         {
             get => (ManageInventoryMethod)ManageInventoryMethodId;
@@ -543,7 +544,7 @@ namespace Smartstore.Core.Catalog.Products
         /// <summary>
         /// Gets or sets the low stock activity.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public LowStockActivity LowStockActivity
         {
             get => (LowStockActivity)LowStockActivityId;
@@ -569,7 +570,7 @@ namespace Smartstore.Core.Catalog.Products
         /// <summary>
         /// Gets or sets the backorder mode.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public BackorderMode BackorderMode
         {
             get => (BackorderMode)BackorderModeId;
@@ -913,7 +914,7 @@ namespace Smartstore.Core.Catalog.Products
         /// <summary>
         /// Gets or sets a value indicating whether the product has a base price.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public bool BasePriceHasValue => BasePriceEnabled && BasePriceAmount.GetValueOrDefault() > 0 && BasePriceBaseAmount.GetValueOrDefault() > 0 && BasePriceMeasureUnit.HasValue();
 
         /// <summary>

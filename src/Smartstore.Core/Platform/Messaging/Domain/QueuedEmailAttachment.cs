@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -115,7 +116,7 @@ namespace Smartstore.Core.Messaging
             set => _mediaStorage = value;
         }
 
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         int IMediaAware.Size { get; set; }
     }
 }

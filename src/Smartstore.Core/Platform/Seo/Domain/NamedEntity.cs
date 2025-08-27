@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using SqlSugar;
 
 namespace Smartstore.Core.Seo
 {
-    [NotMapped]
+    [SugarColumn(IsIgnore = true)]
     public sealed class NamedEntity : BaseEntity, ISlugSupported
     {
         public string EntityName { get; set; }

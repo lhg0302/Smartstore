@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Smartstore.Core.Identity;
@@ -81,7 +82,7 @@ namespace Smartstore.Core.Checkout.Orders
         /// <summary>
         /// Gets or sets the return status.
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public ReturnRequestStatus ReturnRequestStatus
         {
             get => (ReturnRequestStatus)ReturnRequestStatusId;
