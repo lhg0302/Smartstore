@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Smartstore.Data;
 using Smartstore.Data.Providers;
+using SqlSugar;
 
 namespace Smartstore.Test.Common
 {
@@ -16,7 +17,7 @@ namespace Smartstore.Test.Common
         }
 
         public override DbSystemType ProviderType
-            => DbSystemType.Unknown;
+            => DbSystemType.Sqlite;
 
         public override bool MARSEnabled
             => true;
